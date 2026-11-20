@@ -1,0 +1,231 @@
+/* 모든 화면 공통 규칙. 숫자는 tokens.css(= design-system.md)에서만 가져온다. */
+:root {
+  /* 위 값에서 계산한 값 */
+  --title-box-top: calc(var(--title-top) - (var(--t-title-lh) - var(--t-title-size)) / 2);
+  /* 선반 위 식물 자리 높이: 가장 높이 올라오는 스킨답서스(87 + 아랫면 9)에 맞춘 값 */
+  --stage-h: 96px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--color-white);
+  color: var(--color-text);
+  font-family: var(--font);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-lh);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; }
+
+.app {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: 0 var(--side);
+  position: relative;
+}
+
+/* ---------- 글자 ---------- */
+.t-title   { font-size: var(--t-title-size);   line-height: var(--t-title-lh);   font-weight: var(--t-title-w); margin: 0; }
+.t-choice  { font-size: var(--t-choice-size);  line-height: var(--t-choice-lh);  font-weight: var(--t-choice-w); }
+.t-name    { font-size: var(--t-name-size);    line-height: var(--t-name-lh);    font-weight: var(--t-name-w); }
+.t-kind    { font-size: var(--t-kind-size);    line-height: var(--t-kind-lh);    font-weight: var(--t-kind-w); color: var(--color-text-sub); }
+.t-desc    { font-size: var(--t-desc-size);    line-height: var(--t-desc-lh);    font-weight: var(--t-desc-w); color: var(--color-text-sub); margin: 0; }
+.accent    { color: var(--color-green); font-style: normal; font-weight: inherit; }
+
+/* ---------- 화면 제목 ---------- */
+.screen-head { padding-top: var(--title-box-top); }
+.screen-head .t-desc { margin-top: 8px; }
+
+/* 홈·편집: 제목 줄 + 오른쪽 위 아이콘 */
+.title-row { display: flex; align-items: center; justify-content: space-between; height: var(--t-title-lh); }
+.icon-button {
+  width: var(--touch); height: var(--touch);
+  flex: none;
+  /* 누르는 영역은 48이지만 제목 줄 높이를 바꾸지 않게 바깥으로 넘긴다 */
+  margin: calc((var(--t-title-lh) - var(--touch)) / 2) calc((var(--touch) - 24px) / -2) calc((var(--t-title-lh) - var(--touch)) / 2) 0;
+  display: grid; place-items: center;
+  background: none; border: 0; padding: 0;
+}
+
+/* 질문·증상 고르기: 제목(+안내)이 길어져도 첫 선택지가 166보다 위로 올라오지 않게 */
+.q-head { min-height: var(--first-choice-top); padding-bottom: 20px; }
+.choices.q-choices { margin-top: 0; }
+.choice span { display: block; }
+
+/* ---------- 선택지 카드 ---------- */
+.choices {
+  list-style: none; padding: 0;
+  margin: calc(var(--first-choice-top) - var(--title-box-top) - var(--t-title-lh)) 0 0;
+  display: flex; flex-direction: column; gap: var(--choice-gap);
+}
+.choice {
+  position: relative;
+  width: 100%; height: var(--choice-h);
+  border-radius: var(--radius);
+  background: var(--color-bg-soft);
+  border: 2px solid transparent; /* 선택해도 크기가 변하지 않게 늘 2를 둔다 */
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 calc(16px + 20px);
+  text-align: center;
+}
+.choice[aria-pressed="true"], .choice[aria-checked="true"] {
+  background: var(--color-white);
+  border-color: var(--color-green);
+  color: var(--color-green);
+}
+.choice .check { position: absolute; right: 16px; top: 50%; margin-top: -10px; display: none; }
+.choice[aria-pressed="true"] .check, .choice[aria-checked="true"] .check { display: block; }
+.choice b { color: var(--color-green); font-weight: 700; }
+
+/* ---------- 입력 칸 ---------- */
+.field {
+  display: block;
+  width: 100%; height: var(--choice-h);
+  margin-top: calc(var(--first-choice-top) - var(--title-box-top) - var(--t-title-lh));
+  border-radius: var(--radius);
+  background: var(--color-white);
+  border: 2px solid var(--color-green);
+  padding: 0 16px;
+  outline: none;
+}
+.field::placeholder { color: var(--color-text-sub); opacity: 1; }
+.field-guide { margin-top: 8px; }
+
+.search-results { margin-top: 16px; }
+.search-results .choices { margin-top: 0; }
+.no-result { margin-top: 16px; }
+.no-result-title { font-size: var(--t-choice-size); line-height: var(--t-choice-lh); font-weight: 600; margin: 0; }
+.no-result .t-desc { margin-top: 8px; }
+
+/* ---------- 아래 버튼 ---------- */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100%; max-width: var(--max-width);
+  padding: 0 var(--side) var(--bottom-gap);
+  background: var(--color-white);
+  /* 버튼이 몇 개든 같은 너비로 나눈다(두 개면 169 + 16 + 169) */
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--button-gap);
+  z-index: 10;
+}
+.bottom-spacer { height: calc(var(--button-h) + var(--bottom-gap) + 24px); }
+
+.btn {
+  height: var(--button-h);
+  padding: 0;
+  min-width: 0;
+  border-radius: var(--radius);
+  font-size: var(--t-choice-size); line-height: var(--t-choice-lh); font-weight: var(--t-choice-w);
+  display: flex; align-items: center; justify-content: center;
+  border: 0;
+}
+.btn-primary { background: var(--color-green); color: var(--color-white); }
+.btn-primary:disabled { background: var(--color-green-gray); color: var(--color-text-sub); cursor: default; }
+.btn-secondary { background: var(--color-white); color: var(--color-green); border: 1px solid var(--color-green); }
+
+/* ---------- 홈 선반 ---------- */
+.shelf-head { height: calc(var(--shelf-first-top) - var(--stage-h)); }
+.shelf-row { height: var(--shelf-pitch); }
+.shelf-cells, .shelf-labels { display: grid; grid-template-columns: repeat(3, 1fr); }
+.shelf-bar { height: var(--shelf-h); background: var(--color-green-gray); }
+
+.stage { position: relative; height: var(--stage-h); }
+.stage .pot { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); display: block; }
+.stage .plant-art { position: absolute; left: 50%; transform: translateX(-50%); display: block; z-index: 1; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+
+.round-btn {
+  position: absolute;
+  width: var(--touch); height: var(--touch);
+  background: none; border: 0; padding: 0;
+  display: grid; place-items: center;
+  z-index: 2;
+}
+.round-btn .circle { width: var(--round-btn); height: var(--round-btn); border-radius: 50%; background: var(--color-green-gray); display: grid; place-items: center; }
+/* 더하기: 원이 화분 테두리 윗면보다 12 위에, 가운데 */
+.round-btn.plus { left: 50%; transform: translateX(-50%); bottom: calc(var(--pot-h) + var(--plus-above-rim) + var(--round-btn) / 2 - var(--touch) / 2); }
+/* 빼기: 원 중심이 화분 테두리 왼쪽 끝 */
+.round-btn.minus {
+  left: calc(50% - var(--pot-rim-w) / 2 - var(--touch) / 2);
+  bottom: calc(var(--pot-h) - var(--pot-rim-h) / 2 - var(--touch) / 2);
+}
+
+.label-cell { text-align: center; padding-top: var(--shelf-label-gap); min-width: 0; }
+.label-cell .t-name, .label-cell .t-kind { display: block; white-space: nowrap; overflow: hidden; }
+.label-cell .t-kind { margin-top: var(--name-kind-gap); }
+
+/* ---------- 상태 표시 ---------- */
+.status { display: inline-flex; align-items: center; gap: var(--status-dot-gap); margin-top: var(--status-gap); color: var(--color-text); }
+.status .dot { width: var(--status-dot); height: var(--status-dot); border-radius: 50%; flex: none; }
+.status .dot.ok { background: var(--color-status-ok); }
+.status .dot.help { background: var(--color-status-help); }
+.status .t-desc { color: var(--color-text); }
+
+/* ---------- 편집: 끌어서 옮기기 ---------- */
+.edit .stage[data-has-plant] { touch-action: none; cursor: grab; }
+.stage.dragging .plant-art { visibility: hidden; }
+.drag-ghost { position: fixed; z-index: 20; pointer-events: none; transform: translate(-50%, -100%); }
+
+/* ---------- 해결책 화면 ---------- */
+body.bg-soft { background: var(--color-bg-soft); }
+.t-section { font-size: var(--t-section-size); line-height: var(--t-section-lh); font-weight: var(--t-section-w); margin: 0; }
+.t-body { font-size: var(--t-body-size); line-height: var(--t-body-lh); font-weight: var(--t-body-w); margin: 0; }
+
+/* 위쪽 막대: 꺾쇠 왼쪽 끝 38, 별명은 꺾쇠 오른쪽 20, 글자 윗부분 84 */
+.top-bar {
+  position: relative;
+  margin-top: calc(84px - (var(--t-title-lh) - var(--t-title-size)) / 2);
+  padding-left: calc(38px + 10px + 20px - var(--side));
+}
+/* 위쪽 막대는 한 줄. 별명이 길면 끝을 …으로 (전체 별명은 바로 아래 식물 카드에 보인다) */
+.top-bar .t-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-bar .back {
+  position: absolute;
+  left: calc(38px + 5px - var(--touch) / 2 - var(--side));
+  top: calc(var(--t-title-lh) / 2 - var(--touch) / 2);
+  width: var(--touch); height: var(--touch);
+  display: grid; place-items: center;
+}
+
+/* 식물 카드: 윗면 136. 화분 아랫면(--pot-bottom)은 가장 키 큰 식물이 카드 안에 들어오게
+   result.js가 정한다(위 여백 16 + 가장 큰 그림 높이). 별명 +24, 종류 +50, 상태 +74, 카드 높이 +117 */
+.plant-card {
+  --pot-bottom: 225px;
+  position: relative;
+  margin-top: calc(136px - 84px + (var(--t-title-lh) - var(--t-title-size)) / 2 - var(--t-title-lh));
+  height: calc(var(--pot-bottom) + 117px);
+  background: var(--color-white);
+  border-radius: var(--radius);
+  text-align: center;
+}
+.card-stage { position: absolute; left: 0; right: 0; top: 0; height: var(--pot-bottom); }
+.card-stage .pot { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); display: block; }
+.card-stage .plant-art { position: absolute; left: 50%; transform: translateX(-50%); display: block; z-index: 1; }
+.card-name, .card-kind, .card-status { position: absolute; left: 0; right: 0; margin: 0; }
+.card-name { top: calc(var(--pot-bottom) + 24px); }
+.card-kind { top: calc(var(--pot-bottom) + 50px); }
+.card-status { top: calc(var(--pot-bottom) + 74px - var(--status-gap)); }
+
+.unsure { margin-top: 16px; }
+
+/* 구역: 제목-본문 16, 본문-구분선 약 17(간격 단위에 맞춰 16), 구분선-다음 제목 20 */
+.sections { margin-top: 32px; padding-bottom: var(--bottom-gap); }
+.sol-section { padding: 20px 0 16px; border-bottom: 1px solid var(--color-divider); }
+.sol-section:first-child { padding-top: 0; }
+.sol-section:last-child { border-bottom: 0; }
+.sol-section .t-body { margin-top: 16px; }
+
+/* ---------- 막다른 화면 ---------- */
+.deadend-btn { margin-top: 32px; width: 100%; }
+
+/* 불러오기 실패 */
+.load-error { padding-top: var(--title-box-top); }

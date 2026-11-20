@@ -1,0 +1,63 @@
+/* design-system.md의 값만 옮겨 둔 곳. 값을 바꿀 때는 design-system.md를 먼저 고친다. */
+:root {
+  /* 색 */
+  --color-text: #000000;
+  --color-text-sub: #767676;
+  --color-white: #FFFFFF;
+  --color-bg-soft: #F7F8F5;
+  --color-green: #2F6B4F;
+  --color-green-gray: #DDE3DC;
+  --color-divider: #AEAEAE;
+  --color-pot-rim: #754D4D;
+  --color-pot-body: #A07E7E;
+  --color-status-ok: #3E8E5A;
+  --color-status-help: #C98A1B;
+
+  /* 글자: 크기 / 줄 간격 / 굵기 */
+  --font: "Pretendard", system-ui, sans-serif;
+  --t-title-size: 24px;   --t-title-lh: 32px;   --t-title-w: 700;
+  --t-section-size: 20px; --t-section-lh: 28px; --t-section-w: 600;
+  --t-body-size: 16px;    --t-body-lh: 24px;    --t-body-w: 400;
+  --t-choice-size: 18px;  --t-choice-lh: 26px;  --t-choice-w: 500;
+  --t-name-size: 18px;    --t-name-lh: 26px;    --t-name-w: 500;
+  --t-kind-size: 14px;    --t-kind-lh: 20px;    --t-kind-w: 400;
+  --t-desc-size: 14px;    --t-desc-lh: 22px;    --t-desc-w: 400;
+
+  /* 간격과 모서리 */
+  --side: 24px;            /* 화면 좌우 여백 */
+  --max-width: 480px;      /* 넓은 화면에서 내용 최대 너비 */
+  --radius: 16px;
+  --title-top: 86px;       /* 제목 글자 윗부분이 화면 위에서 떨어진 거리 */
+  --first-choice-top: 166px;
+  --bottom-gap: 54px;      /* 아래 버튼 아랫면 ~ 화면 아래 */
+  --touch: 48px;           /* 누르는 영역 최소 크기 */
+
+  /* 부품 */
+  --choice-h: 58px;
+  --choice-gap: 12px;
+  --button-h: 58px;
+  --button-gap: 16px;
+
+  /* 홈 선반 */
+  --shelf-h: 16px;
+  --shelf-pitch: 240px;
+  --shelf-first-top: 286px;
+  --shelf-label-gap: 16px;   /* 선반 아랫면 ~ 별명 */
+  --name-kind-gap: 0px;      /* 별명 줄 ~ 종류 줄 (와이어프레임: 사이 없이 붙음) */
+  --status-gap: 4px;         /* 종류 ~ 상태 표시 */
+  --status-dot: 8px;
+  --status-dot-gap: 6px;
+
+  /* 화분 */
+  --pot-rim-w: 76px;
+  --pot-rim-h: 14px;
+  --pot-rim-r: 4px;
+  --pot-body-top-w: 64px;
+  --pot-body-bottom-w: 50px;
+  --pot-body-h: 38px;
+  --pot-h: 52px;
+
+  /* 더하기·빼기 원 */
+  --round-btn: 24px;
+  --plus-above-rim: 12px;
+}
